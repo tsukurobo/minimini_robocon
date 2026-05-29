@@ -1,12 +1,14 @@
 #include <Arduino.h>
 
-const int triggerPin = 14;
-const int echoPin = 15;
+const int triggerPin = 4;
+const int echoPin = 5;
+const int buzzerPin = 6;
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
   pinMode(triggerPin, OUTPUT);
   pinMode(echoPin, INPUT);
+  pinMode(buzzerPin, OUTPUT);
 }
 
 void loop() {
@@ -19,9 +21,9 @@ void loop() {
   long duration = pulseIn(echoPin, HIGH);
   float distance = (duration * 0.0343) / 2;
 
-  Serial.print("distance: ");
-  Serial.print(distance);
-  Serial.println(" cm");
+  Serial.print("Distance: ");
+  Serial.println(distance);
 
-  delay(100);
+  int interval = map(constrain(distance, 2, 100), 2, 100, 50, 1000);
+  int pitch = map(constrain(distance, 2, 100), 2, 100, 1000, 500);
 }
